@@ -22,8 +22,11 @@ import android.text.Spannable;
 import android.text.method.LinkMovementMethod;
 import android.text.method.Touch;
 import android.text.style.ClickableSpan;
+import android.text.style.URLSpan;
 import android.view.MotionEvent;
 import android.widget.TextView;
+
+import java.lang.ref.WeakReference;
 
 /**
  * Copied from http://stackoverflow.com/questions/8558732
@@ -38,12 +41,13 @@ public class LocalLinkMovementMethod extends LinkMovementMethod {
         return sInstance;
     }
 
+    private WeakReference<OnLinkClickedListener> linkClickedListener = new WeakReference<>(null);
+
     @Override
     public boolean onTouchEvent(TextView widget, Spannable buffer, MotionEvent event) {
         int action = event.getAction();
 
-        if (action == MotionEvent.ACTION_UP ||
-                action == MotionEvent.ACTION_DOWN) {
+        if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_DOWN) {
             int x = (int) event.getX();
             int y = (int) event.getY();
 
@@ -62,7 +66,10 @@ public class LocalLinkMovementMethod extends LinkMovementMethod {
             if (link.length != 0) {
                 if (action == MotionEvent.ACTION_UP) {
                     link[0].onClick(widget);
-                } else if (action == MotionEvent.ACTION_DOWN) {
+                    if (link[0] instanceof URLSpan) {
+                        this.onLinkClicked(((URLSpan) link[0]).getURL());
+                    }
+                } else {
                     Selection.setSelection(buffer,
                             buffer.getSpanStart(link[0]),
                             buffer.getSpanEnd(link[0]));
@@ -76,5 +83,19 @@ public class LocalLinkMovementMethod extends LinkMovementMethod {
             }
         }
         return Touch.onTouchEvent(widget, buffer, event);
+    }
+
+    public void setOnLinkClickListener(OnLinkClickedListener listener) {
+        this.linkClickedListener = new WeakReference<>(listener);
+    }
+
+    public void onLinkClicked(String url) {
+        if (linkClickedListener.get() != null) {
+            linkClickedListener.get().onLinkClicked(url);
+        }
+    }
+
+    public interface OnLinkClickedListener {
+        void onLinkClicked(String url);
     }
 }

@@ -61,7 +61,7 @@ public class MainActivity extends Activity {
         drawTableLinkSpan.setTableLinkText("[tap for table]");
         textView.setDrawTableLinkSpan(drawTableLinkSpan);
 
-        textView.setHtml(R.raw.example, new HtmlResImageGetter(textView));
+        textView.setHtml(R.raw.example, new HtmlResImageGetter(textView), null);
     }
 
     @Override

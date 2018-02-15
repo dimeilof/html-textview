@@ -3,13 +3,11 @@ package org.sufficientlysecure.htmltextview;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.os.Parcel;
 import android.text.Layout;
-import android.text.ParcelableSpan;
 import android.text.Spanned;
 import android.text.style.LeadingMarginSpan;
 
-public class BulletSpan implements LeadingMarginSpan, ParcelableSpan {
+public class BulletSpan implements LeadingMarginSpan {
 
     private int mGapWidth;
     private int mBulletRadius;
@@ -35,13 +33,6 @@ public class BulletSpan implements LeadingMarginSpan, ParcelableSpan {
         mColor = color;
     }
 
-    public BulletSpan(Parcel src) {
-        mGapWidth = src.readInt();
-        mBulletRadius = src.readInt();
-        mWantColor = src.readInt() != 0;
-        mColor = src.readInt();
-    }
-
     public int getGapWidth() {
         return mGapWidth;
     }
@@ -64,29 +55,6 @@ public class BulletSpan implements LeadingMarginSpan, ParcelableSpan {
 
     public void setTextHeight(float textHeight) {
         mTextHeight = textHeight;
-    }
-
-    public int getSpanTypeId() {
-        return getSpanTypeIdInternal();
-    }
-
-    public int getSpanTypeIdInternal() {
-        return 8;
-    }
-
-    public int describeContents() {
-        return 0;
-    }
-
-    public void writeToParcel(Parcel dest, int flags) {
-        writeToParcelInternal(dest, flags);
-    }
-
-    public void writeToParcelInternal(Parcel dest, int flags) {
-        dest.writeInt(mGapWidth);
-        dest.writeInt(mBulletRadius);
-        dest.writeInt(mWantColor ? 1 : 0);
-        dest.writeInt(mColor);
     }
 
     public int getLeadingMargin(boolean first) {
