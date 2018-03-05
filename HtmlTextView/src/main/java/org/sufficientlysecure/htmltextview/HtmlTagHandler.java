@@ -210,7 +210,8 @@ public class HtmlTagHandler implements Html.TagHandler {
                         BulletSpan bullet = new BulletSpan();
                         bullet.setBulletRadius((int) (em * 0.125));
                         bullet.setGapWidth((int) em);
-                        bullet.setTextHeight(mTextView.getTextSize());
+                        bullet.setTextHeight(em);
+                        bullet.setLevel(lists.size());
                         // Nested BulletSpans increases distance between bullet and text, so we must prevent it.
                         int bulletMargin = bullet.getGapWidth();
                         if (lists.size() > 1) {
@@ -230,6 +231,8 @@ public class HtmlTagHandler implements Html.TagHandler {
 
                         NumberSpan number = new NumberSpan(mTextPaint, olNextIndex.lastElement() - 1);
                         number.setGapWidth((int) (em * 0.5));
+                        number.setTextHeight(em);
+                        number.setLevel(lists.size());
                         int numberMargin = number.getGapWidth();
                         if (lists.size() > 1) {
                             numberMargin -= number.getLeadingMargin(true);

@@ -32,6 +32,8 @@ import android.text.style.LeadingMarginSpan;
 public class NumberSpan implements LeadingMarginSpan {
 
     private int mGapWidth;
+    private float mTextHeight;
+    private int mLevel;
     private final String mNumber;
     private final int mTextWidth;
 
@@ -48,9 +50,25 @@ public class NumberSpan implements LeadingMarginSpan {
         mGapWidth = gapWidth;
     }
 
+    public float getTextHeight() {
+        return mTextHeight;
+    }
+
+    public void setTextHeight(float textHeight) {
+        mTextHeight = textHeight;
+    }
+
+    public int getLevel() {
+        return mLevel;
+    }
+
+    public void setLevel(int level) {
+        mLevel = level;
+    }
+
     @Override
     public int getLeadingMargin(boolean first) {
-        return mTextWidth + mGapWidth;
+        return (int) (mTextWidth * 1.2f + mGapWidth);
     }
 
     @Override
@@ -60,7 +78,7 @@ public class NumberSpan implements LeadingMarginSpan {
         if (text instanceof Spanned) {
             int spanStart = ((Spanned) text).getSpanStart(this);
             if (spanStart == start) {
-                c.drawText(mNumber, x, baseline, p);
+                c.drawText(mNumber, mLevel * (mTextHeight * 0.9f), baseline, p);
             }
         }
     }

@@ -12,6 +12,7 @@ public class BulletSpan implements LeadingMarginSpan {
     private int mGapWidth;
     private int mBulletRadius;
     private float mTextHeight;
+    private int mLevel;
     private final boolean mWantColor;
     private final int mColor;
 
@@ -57,6 +58,14 @@ public class BulletSpan implements LeadingMarginSpan {
         mTextHeight = textHeight;
     }
 
+    public int getLevel() {
+        return mLevel;
+    }
+
+    public void setLevel(int level) {
+        mLevel = level;
+    }
+
     public int getLeadingMargin(boolean first) {
         return 2 * mBulletRadius + mGapWidth;
     }
@@ -84,11 +93,11 @@ public class BulletSpan implements LeadingMarginSpan {
                 }
 
                 c.save();
-                c.translate(x + dir * mBulletRadius * 2, (top + bottom - (mTextHeight > 0 ? (bottom - top - mTextHeight) : 0)) / 2.0f - mBulletRadius);
+                c.translate(mLevel * mTextHeight + dir * mBulletRadius * 2, (top + bottom - (mTextHeight > 0 ? (bottom - top - mTextHeight) : 0)) / 2.0f - mBulletRadius);
                 c.drawPath(sBulletPath, p);
                 c.restore();
             } else {
-                c.drawCircle(x + dir * (mBulletRadius * 2), (top + bottom - (mTextHeight > 0 ? (bottom - top - mTextHeight) : 0)) / 2.0f - mBulletRadius, mBulletRadius, p);
+                c.drawCircle(mLevel * mTextHeight + dir * (mBulletRadius * 2), (top + bottom - (mTextHeight > 0 ? (bottom - top - mTextHeight) : 0)) / 2.0f - mBulletRadius, mBulletRadius, p);
             }
 
             if (mWantColor) {
