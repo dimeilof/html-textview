@@ -208,7 +208,7 @@ public class HtmlTagHandler implements Html.TagHandler {
                         }
 
                         BulletSpan bullet = new BulletSpan();
-                        bullet.setBulletRadius((int) (em * 0.125));
+                        bullet.setBulletRadius((int) (em * 0.142));
                         bullet.setGapWidth((int) em);
                         bullet.setTextHeight(em);
                         bullet.setLevel(lists.size());

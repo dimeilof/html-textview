@@ -93,11 +93,11 @@ public class BulletSpan implements LeadingMarginSpan {
                 }
 
                 c.save();
-                c.translate(mLevel * mTextHeight + dir * mBulletRadius * 2, (top + bottom - (mTextHeight > 0 ? (bottom - top - mTextHeight) : 0)) / 2.0f - mBulletRadius);
+                c.translate(mLevel * mTextHeight + dir * mBulletRadius * 2, (top + bottom - (mTextHeight > 0 ? (bottom - top - mTextHeight) : 0)) / 2f + mBulletRadius);
                 c.drawPath(sBulletPath, p);
                 c.restore();
             } else {
-                c.drawCircle(mLevel * mTextHeight + dir * (mBulletRadius * 2), (top + bottom - (mTextHeight > 0 ? (bottom - top - mTextHeight) : 0)) / 2.0f - mBulletRadius, mBulletRadius, p);
+                c.drawCircle(mLevel * mTextHeight + dir * (mBulletRadius * 2), (top + bottom - (mTextHeight > 0 ? (bottom - top - mTextHeight) : 0)) / 2f + mBulletRadius, mBulletRadius, p);
             }
 
             if (mWantColor) {
